@@ -5,43 +5,69 @@ import java.io.Serializable;
 public class Venta implements Serializable {
     private int id;
     private String numBomba;
-    private String tipoGasolina;
+    private String cantidadLitros;
     private String precioGasolina;
-    private String capacidadBomba;
-    private String acumuladorLitrosBomba;
-    private String cantidad;
+    private String totalVenta;
 
-    public Venta(){
+    public Venta() {
         this.numBomba = "";
-        this.tipoGasolina = "";
+        this.cantidadLitros = "";
         this.precioGasolina = "";
-        this.capacidadBomba = "";
-        this.acumuladorLitrosBomba = "";
-        this.cantidad = "";
+        this.totalVenta = "";
     }
 
-    public Venta(String numBomba, String tipoGasolina, String precioGasolina, String capacidadBomba, String acumuladorLitrosBomba, String cantidad){
+    public Venta(String numBomba, String cantidadLitros, String precioGasolina, String totalVenta) {
         this.numBomba = numBomba;
-        this.tipoGasolina = tipoGasolina;
+        this.cantidadLitros = cantidadLitros;
         this.precioGasolina = precioGasolina;
-        this.capacidadBomba = capacidadBomba;
-        this.acumuladorLitrosBomba = acumuladorLitrosBomba;
-        this.cantidad = cantidad;
+        this.totalVenta = totalVenta;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
-    public String getNumBomba() { return numBomba; }
-    public void setNumBomba(String numBomba) { this.numBomba = numBomba; }
-    public String getTipoGasolina() { return tipoGasolina; }
-    public void setTipoGasolina(String tipoGasolina) { this.tipoGasolina = tipoGasolina; }
-    public String getPrecioGasolina() { return precioGasolina; }
-    public void setPrecioGasolina(String precioGasolina) { this.precioGasolina = precioGasolina; }
-    public String getCapacidadBomba() { return capacidadBomba; }
-    public void setCapacidadBomba(String capacidadBomba) { this.capacidadBomba = capacidadBomba; }
-    public String getAcumuladorLitrosBomba() { return acumuladorLitrosBomba; }
-    public void setAcumuladorLitrosBomba(String acumuladorLitrosBomba) { this.acumuladorLitrosBomba = acumuladorLitrosBomba; }
-    public String getCantidad() { return cantidad; }
-    public void setCantidad(String cantidad) { this.cantidad = cantidad; }
-}
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getNumBomba() {
+        return numBomba;
+    }
+
+    public void setNumBomba(String numBomba) {
+        this.numBomba = numBomba;
+    }
+
+    public String getCantidadLitros() {
+        return cantidadLitros;
+    }
+
+    public void setCantidadLitros(String cantidadLitros) {
+        this.cantidadLitros = cantidadLitros;
+    }
+
+    public String getPrecioGasolina() {
+        return precioGasolina;
+    }
+
+    public void setPrecioGasolina(String precioGasolina) {
+        this.precioGasolina = precioGasolina;
+    }
+
+    public String getTotalVenta() {
+        return totalVenta;
+    }
+
+    public void setTotalVenta(String totalVenta) {
+        this.totalVenta = totalVenta;
+    }
+
+    @Override
+    public String toString() {
+        return
+                cantidadLitros +
+                " X " + precioGasolina +
+                " = " + totalVenta + '\'';
+    }
+}

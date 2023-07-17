@@ -1,5 +1,6 @@
 package modelo;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -26,7 +27,6 @@ public class VentasDb implements Persistencia, Proyeccion {
         this.helper = new VentasDbHelper(this.context);
     }
 
-
     @Override
     public void openDataBase() {
         db = helper.getWritableDatabase();
@@ -41,15 +41,12 @@ public class VentasDb implements Persistencia, Proyeccion {
     public long insertVenta(Venta venta) {
         ContentValues values = new ContentValues();
         values.put(DefineTabla.Ventas.COLUMN_NAME_NUM_BOMBA, venta.getNumBomba());
-        values.put(DefineTabla.Ventas.COLUMN_NAME_TIPO_GASOLINA, venta.getTipoGasolina());
+        values.put(DefineTabla.Ventas.COLUMN_NAME_CANTIDAD_LITROS, venta.getCantidadLitros());
         values.put(DefineTabla.Ventas.COLUMN_NAME_PRECIO_GASOLINA, venta.getPrecioGasolina());
-        values.put(DefineTabla.Ventas.COLUMN_NAME_CAPACIDAD_BOMBA, venta.getCapacidadBomba());
-        values.put(DefineTabla.Ventas.COLUMN_NAME_ACUMULADOR_LITROS_BOMBA, venta.getAcumuladorLitrosBomba());
-        values.put(DefineTabla.Ventas.COLUMN_NAME_CANTIDAD, venta.getCantidad());
+        values.put(DefineTabla.Ventas.COLUMN_NAME_TOTAL_VENTA, venta.getTotalVenta());
 
         this.openDataBase();
         long num = db.insert(DefineTabla.Ventas.TABLE_NAME, null, values);
-        this.closeDataBase();
         Log.d("agregar", "insertVenta: " + num);
 
         return num;
@@ -75,9 +72,6 @@ public class VentasDb implements Persistencia, Proyeccion {
         return null;
     }
 
-
-
-
     @Override
     public ArrayList<Venta> allVentas() {
         this.openDataBase(); // Abre la base de datos
@@ -97,21 +91,32 @@ public class VentasDb implements Persistencia, Proyeccion {
 
         cursor.close();
 
-        this.closeDataBase();
         return ventas;
     }
 
+    @SuppressLint("Range")
     @Override
     public Venta readVenta(Cursor cursor) {
         Venta venta = new Venta();
         venta.setId(cursor.getInt(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_ID)));
         venta.setNumBomba(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_NUM_BOMBA)));
-        venta.setTipoGasolina(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_TIPO_GASOLINA)));
+        venta.setCantidadLitros(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_CANTIDAD_LITROS)));
         venta.setPrecioGasolina(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_PRECIO_GASOLINA)));
-        venta.setCapacidadBomba(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_CAPACIDAD_BOMBA)));
-        venta.setAcumuladorLitrosBomba(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_ACUMULADOR_LITROS_BOMBA)));
-        venta.setCantidad(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_CANTIDAD)));
+        venta.setTotalVenta(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_TOTAL_VENTA)));
         return venta;
     }
-}
 
+    public double calcularTotal() {
+        this.openDataBase();
+
+        Cursor cursor = db.rawQuery("SELECT SUM(" + DefineTabla.Ventas.COLUMN_NAME_TOTAL_VENTA + ") FROM " + DefineTabla.Ventas.TABLE_NAME, null);
+        double total = 0;
+
+        if (cursor != null && cursor.moveToFirst()) {
+            total = cursor.getDouble(0);
+            cursor.close();
+        }
+
+        return total;
+    }
+}

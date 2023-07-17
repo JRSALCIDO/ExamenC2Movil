@@ -11,13 +11,11 @@ public class VentasDbHelper extends SQLiteOpenHelper {
     private static final String COMMA_SEP = " ,";
     private static final String SQL_CREATE_VENTA = "CREATE TABLE " +
             DefineTabla.Ventas.TABLE_NAME + " (" +
-            DefineTabla.Ventas.COLUMN_NAME_ID + " INTEGER PRIMARY KEY, " +
+            DefineTabla.Ventas.COLUMN_NAME_ID + INTEGER_TYPE + " PRIMARY KEY" + COMMA_SEP +
             DefineTabla.Ventas.COLUMN_NAME_NUM_BOMBA + TEXT_TYPE + COMMA_SEP +
-            DefineTabla.Ventas.COLUMN_NAME_TIPO_GASOLINA + TEXT_TYPE + COMMA_SEP +
+            DefineTabla.Ventas.COLUMN_NAME_CANTIDAD_LITROS + INTEGER_TYPE + COMMA_SEP +
             DefineTabla.Ventas.COLUMN_NAME_PRECIO_GASOLINA + TEXT_TYPE + COMMA_SEP +
-            DefineTabla.Ventas.COLUMN_NAME_CAPACIDAD_BOMBA + TEXT_TYPE + COMMA_SEP +
-            DefineTabla.Ventas.COLUMN_NAME_ACUMULADOR_LITROS_BOMBA + TEXT_TYPE + COMMA_SEP +
-            DefineTabla.Ventas.COLUMN_NAME_CANTIDAD + TEXT_TYPE + ")";
+            DefineTabla.Ventas.COLUMN_NAME_TOTAL_VENTA + TEXT_TYPE + ")";
 
     private static final String SQL_DELETE_VENTA = "DROP TABLE IF EXISTS " +
             DefineTabla.Ventas.TABLE_NAME;
@@ -25,7 +23,7 @@ public class VentasDbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "db1";
     private static final int DATABASE_VERSION = 1;
 
-    public VentasDbHelper(Context context){
+    public VentasDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
