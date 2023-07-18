@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,28 +31,31 @@ public class ListaActivity extends AppCompatActivity {
 
         btnRegresar = findViewById(R.id.btnRegresar);
         listView = findViewById(R.id.lst);
+        EditText etTotal = findViewById(R.id.total);
 
         VentasDbHelper dbHelper = new VentasDbHelper(this);
         ventasDb = new VentasDb(this, dbHelper);
-
 
         listaVentas = ventasDb.allVentas();
 
         // Crea un adaptador para la lista de ventas
         ArrayAdapter<Venta> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listaVentas);
         listView.setAdapter(adapter);
+
+        // Obtén la suma de los totales de la base de datos
+        double totalVentas = ventasDb.calcularTotal();
+
+        // Asigna el valor al EditText
+        etTotal.setText(String.valueOf(totalVentas));
+
         btnRegresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 regresar();
             }
         });
-
-
-
-
-
     }
+
 
     private void regresar() {
         // Crea un intent para volver a la actividad principal (MainActivity)

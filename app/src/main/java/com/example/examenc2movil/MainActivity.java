@@ -129,34 +129,41 @@ public class MainActivity extends AppCompatActivity {
 
     private void hacerVenta() {
         String cantidad = etCantidad.getText().toString().trim();
+        String precio = etPrecioGasolina.getText().toString().trim();
 
-        if (cantidad.isEmpty()) {
-            Toast.makeText(this, "Ingrese una cantidad válida", Toast.LENGTH_SHORT).show();
+        if (cantidad.isEmpty() || precio.isEmpty()) {
+            Toast.makeText(this, "Ingrese una cantidad y precio válidos", Toast.LENGTH_SHORT).show();
             return;
         }
+
 
         int cantidadGasolina = Integer.parseInt(cantidad);
         int inventario = 200; // Capacidad de la bomba de gasolina
 
-        if (cantidadGasolina > inventario) {
-            Toast.makeText(this, "No hay suficiente gasolina en inventario", Toast.LENGTH_SHORT).show();
+        int contadorLitros = Integer.parseInt(etAcumuladorLitrosBomba.getText().toString().trim());
+        int nuevoContadorLitros = contadorLitros + cantidadGasolina;
+
+        if (nuevoContadorLitros > inventario) {
+            Toast.makeText(this, "La venta supera la capacidad de la bomba de gasolina", Toast.LENGTH_SHORT).show();
             return;
         }
 
         // Realiza las operaciones necesarias para la venta de gasolina
-        int contadorLitros = Integer.parseInt(etAcumuladorLitrosBomba.getText().toString().trim());
-        int nuevoContadorLitros = contadorLitros + cantidadGasolina;
         etAcumuladorLitrosBomba.setText(String.valueOf(nuevoContadorLitros));
 
         // Muestra la cantidad, costo y total a pagar
         double precioGasolina = Double.parseDouble(etPrecioGasolina.getText().toString().trim());
         double costo = cantidadGasolina * precioGasolina;
-        double totalPagar = costo * 1.16; // Aplica un impuesto del 16%
+
+        double totalPagar = costo; // Suma el impuesto al costo
         Toast.makeText(this, "Cantidad: " + cantidadGasolina + "\nCosto: $" + costo + "\nTotal a pagar: $" + totalPagar, Toast.LENGTH_SHORT).show();
         tvLitros.setText(String.valueOf(cantidadGasolina));
         tvPrecio.setText(String.valueOf((int) precioGasolina));
-        tvTotalAPagar.setText(String.valueOf((int) costo));
+        tvTotalAPagar.setText(String.valueOf((int) totalPagar));
+        totalf = (float) totalPagar;
     }
+
+
 
 
 
@@ -167,13 +174,22 @@ public class MainActivity extends AppCompatActivity {
         String precio = etPrecioGasolina.getText().toString();
         String totalVenta = String.valueOf(totalf);
 
+        // Verifica si el campo de hora de registro está vacío
+        String horaRegistro = ""; // Obtén el valor del campo de hora de registro
+
+        if (cantidad.isEmpty() || precio.isEmpty()) {
+            Toast.makeText(this, "Complete todos los campos requeridos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         // Crea el objeto de la venta y guárdalo en la tabla de ventas
-        Integer cantidadLitros = Integer.parseInt(cantidad); // Convertir la cantidad a Integer
-        Venta venta = new Venta(numBomba, cantidadLitros, precio, totalVenta); // Utiliza cantidadLitros aquí
+        Venta venta = new Venta(numBomba, Integer.parseInt(cantidad), precio, totalVenta);
         ventasDb.insertVenta(venta);
 
         Toast.makeText(this, "Venta registrada", Toast.LENGTH_SHORT).show();
     }
+
+
 
 
 
