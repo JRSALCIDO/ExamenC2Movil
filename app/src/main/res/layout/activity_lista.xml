@@ -63,7 +63,9 @@
         <ListView
             android:id="@+id/lst"
             android:layout_width="match_parent"
-            android:layout_height="500dp"/>
+            android:layout_height="500dp"
+            android:textSize="20sp"
+            android:textStyle="bold"/>
 
     <LinearLayout
         android:layout_width="match_parent"

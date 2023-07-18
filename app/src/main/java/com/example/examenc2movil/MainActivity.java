@@ -156,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
         tvLitros.setText(String.valueOf(cantidadGasolina));
         tvPrecio.setText(String.valueOf((int) precioGasolina));
         tvTotalAPagar.setText(String.valueOf((int) costo));
-        totalf = (float) costo;
     }
 
 
@@ -164,16 +163,20 @@ public class MainActivity extends AppCompatActivity {
     private void registroVenta() {
         // Obtén los valores necesarios para registrar la venta
         String numBomba = etNumBomba.getText().toString();
-        String tipoGasolina = ""; // Obtén el tipo de gasolina seleccionado
-        String precio = etPrecioGasolina.getText().toString();
         String cantidad = etCantidad.getText().toString();
+        String precio = etPrecioGasolina.getText().toString();
+        String totalVenta = String.valueOf(totalf);
 
         // Crea el objeto de la venta y guárdalo en la tabla de ventas
-        Venta venta = new Venta(numBomba, tipoGasolina, precio, cantidad);
+        Integer cantidadLitros = Integer.parseInt(cantidad); // Convertir la cantidad a Integer
+        Venta venta = new Venta(numBomba, cantidadLitros, precio, totalVenta); // Utiliza cantidadLitros aquí
         ventasDb.insertVenta(venta);
 
         Toast.makeText(this, "Venta registrada", Toast.LENGTH_SHORT).show();
     }
+
+
+
 
     private void limpiar() {
         // Limpiar los campos

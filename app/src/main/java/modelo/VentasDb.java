@@ -97,14 +97,20 @@ public class VentasDb implements Persistencia, Proyeccion {
     @SuppressLint("Range")
     @Override
     public Venta readVenta(Cursor cursor) {
-        Venta venta = new Venta();
+        String numBomba = cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_NUM_BOMBA));
+        Integer cantidad = cursor.getInt(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_CANTIDAD_LITROS));
+        String precio = cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_PRECIO_GASOLINA));
+        String totalVenta = cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_TOTAL_VENTA));
+
+        Venta venta = new Venta(numBomba, cantidad, precio, totalVenta);
         venta.setId(cursor.getInt(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_ID)));
-        venta.setNumBomba(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_NUM_BOMBA)));
-        venta.setCantidadLitros(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_CANTIDAD_LITROS)));
-        venta.setPrecioGasolina(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_PRECIO_GASOLINA)));
-        venta.setTotalVenta(cursor.getString(cursor.getColumnIndex(DefineTabla.Ventas.COLUMN_NAME_TOTAL_VENTA)));
+        venta.setNumBomba(numBomba);
+        venta.setCantidadLitros(cantidad);
+        venta.setPrecioGasolina(precio);
+        venta.setTotalVenta(totalVenta);
         return venta;
     }
+
 
     public double calcularTotal() {
         this.openDataBase();

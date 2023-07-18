@@ -5,23 +5,18 @@ import java.io.Serializable;
 public class Venta implements Serializable {
     private int id;
     private String numBomba;
-    private String cantidadLitros;
+    private int cantidadLitros;
     private String precioGasolina;
     private String totalVenta;
 
-    public Venta() {
-        this.numBomba = "";
-        this.cantidadLitros = "";
-        this.precioGasolina = "";
-        this.totalVenta = "";
-    }
-
-    public Venta(String numBomba, String cantidadLitros, String precioGasolina, String totalVenta) {
+    public Venta(String numBomba, Integer cantidadLitros, String precioGasolina, String totalVenta) {
         this.numBomba = numBomba;
         this.cantidadLitros = cantidadLitros;
         this.precioGasolina = precioGasolina;
         this.totalVenta = totalVenta;
     }
+
+
 
     public int getId() {
         return id;
@@ -39,11 +34,11 @@ public class Venta implements Serializable {
         this.numBomba = numBomba;
     }
 
-    public String getCantidadLitros() {
+    public int getCantidadLitros() {
         return cantidadLitros;
     }
 
-    public void setCantidadLitros(String cantidadLitros) {
+    public void setCantidadLitros(int cantidadLitros) {
         this.cantidadLitros = cantidadLitros;
     }
 
@@ -68,6 +63,6 @@ public class Venta implements Serializable {
         return
                 cantidadLitros +
                 " X " + precioGasolina +
-                " = " + totalVenta + '\'';
+                " = $" + totalVenta + '\'';
     }
 }

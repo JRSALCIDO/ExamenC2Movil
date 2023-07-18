@@ -34,8 +34,8 @@ public class VentasAdapter extends ArrayAdapter<Venta> {
         Venta venta = ventasList.get(position);
 
         TextView textViewNumBomba = itemView.findViewById(R.id.numBomba);
-        TextView textViewCantidadLitros = itemView.findViewById(R.id.cantidad);
-        TextView textViewPrecioGasolina = itemView.findViewById(R.id.precioGasolina);
+        TextView textViewCantidadLitros = itemView.findViewById(R.id.tvLitros);
+        TextView textViewPrecioGasolina = itemView.findViewById(R.id.tvPrecio);
         TextView textViewTotalVenta = itemView.findViewById(R.id.tvTotalAPagar);
 
         textViewNumBomba.setText(venta.getNumBomba());
